@@ -1,16 +1,16 @@
-// src/lang/id.js
+// src/lang/ms.js
 
-class Indonesian {
+class Malaysian {
     constructor() {
         this.satuan = [
             "", "satu", "dua", "tiga", "empat",
-            "lima", "enam", "tujuh", "delapan", "sembilan",
+            "lima", "enam", "tujuh", "lapan", "sembilan",
             "sepuluh", "sebelas"
         ];
 
         this.scales = [
-            { value: 1e12, label: "triliun" },
-            { value: 1e9, label: "milyar" },
+            { value: 1e12, label: "trilion" },
+            { value: 1e9, label: "bilion" },
             { value: 1e6, label: "juta" },
             { value: 1e3, label: "ribu" }
         ];
@@ -56,8 +56,8 @@ class Indonesian {
             }
         }
 
-        return "angka terlalu besar";
+        return "nombor terlalu besar";
     }
 }
 
-module.exports = { Indonesian };
+module.exports = { Malaysian };

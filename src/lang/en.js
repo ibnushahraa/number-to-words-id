@@ -22,9 +22,22 @@ class English {
         ];
     }
 
-    toWords(num) {
+    toWords(num, type = "cardinal") {
         num = parseInt(num, 10);
         if (isNaN(num)) return "";
+
+        if (type === "ordinal") {
+            const special = {
+                1: "first", 2: "second", 3: "third",
+                21: "twenty-first", 22: "twenty-second", 23: "twenty-third",
+                31: "thirty-first"
+            };
+            if (special[num]) return special[num];
+            if (num % 10 === 1) return this.toWords(num) + "st";
+            if (num % 10 === 2) return this.toWords(num) + "nd";
+            if (num % 10 === 3) return this.toWords(num) + "rd";
+            return this.toWords(num) + "th";
+        }
 
         if (num < 20) return this.units[num];
         if (num < 100) {

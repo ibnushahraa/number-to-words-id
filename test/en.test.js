@@ -16,7 +16,8 @@ describe("English", () => {
     });
 
     test("Millions", () => {
-        expect(toWords(4500000, { lang: "en" })).toBe("four million five hundred thousand");
+        expect(toWords(4500000, { lang: "en" }))
+            .toBe("four million five hundred thousand");
     });
 
     describe("Currency", () => {
@@ -28,6 +29,23 @@ describe("English", () => {
         test("Fallback (EUR)", () => {
             expect(toWords(1000, { lang: "en", currency: "EUR" }))
                 .toBe("one thousand eur"); // fallback
+        });
+    });
+
+    describe("Ordinal", () => {
+        test("Special cases", () => {
+            expect(toWords(1, { lang: "en", type: "ordinal" })).toBe("first");
+            expect(toWords(2, { lang: "en", type: "ordinal" })).toBe("second");
+            expect(toWords(3, { lang: "en", type: "ordinal" })).toBe("third");
+        });
+
+        test("Common suffix -th", () => {
+            expect(toWords(4, { lang: "en", type: "ordinal" })).toBe("fourth");
+            expect(toWords(10, { lang: "en", type: "ordinal" })).toBe("tenth");
+            expect(toWords(21, { lang: "en", type: "ordinal" })).toBe("twenty-first");
+            expect(toWords(22, { lang: "en", type: "ordinal" })).toBe("twenty-second");
+            expect(toWords(23, { lang: "en", type: "ordinal" })).toBe("twenty-third");
+            expect(toWords(24, { lang: "en", type: "ordinal" })).toBe("twenty-fourth");
         });
     });
 });

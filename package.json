@@ -1,7 +1,7 @@
 {
   "name": "number-to-words-id",
-  "version": "1.0.0",
-  "description": "Convert numbers to words (terbilang) in Bahasa Indonesia and English.",
+  "version": "1.1.0",
+  "description": "Convert numbers to words (terbilang) in Bahasa Indonesia, Bahasa Malaysia, and English.",
   "main": "src/index.js",
   "scripts": {
     "test": "jest"
@@ -11,9 +11,11 @@
     "words",
     "terbilang",
     "indonesia",
+    "malaysia",
+    "melayu",
     "english"
   ],
-  "author": "",
+  "author": "Syarwani (https://github.com/ibnushahraa)",
   "license": "MIT",
   "repository": {
     "type": "git",

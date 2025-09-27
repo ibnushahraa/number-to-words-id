@@ -30,4 +30,22 @@ describe("Bahasa Indonesia", () => {
                 .toBe("seribu jpy"); // fallback
         });
     });
+
+    describe("Ordinal", () => {
+        test("Dasar", () => {
+            expect(toWords(1, { lang: "id", type: "ordinal" }))
+                .toBe("pertama");
+            expect(toWords(2, { lang: "id", type: "ordinal" }))
+                .toBe("kedua");
+            expect(toWords(10, { lang: "id", type: "ordinal" }))
+                .toBe("kesepuluh");
+        });
+
+        test("Puluhan & Ratusan", () => {
+            expect(toWords(25, { lang: "id", type: "ordinal" }))
+                .toBe("kedua puluh lima");
+            expect(toWords(100, { lang: "id", type: "ordinal" }))
+                .toBe("keseratus");
+        });
+    });
 });

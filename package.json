@@ -1,6 +1,6 @@
 {
   "name": "number-to-words-id",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Convert numbers to words (terbilang) in Bahasa Indonesia, Bahasa Malaysia, and English.",
   "main": "src/index.js",
   "scripts": {

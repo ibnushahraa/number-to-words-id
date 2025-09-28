@@ -1,63 +1,110 @@
-// src/lang/id.js
+const { getCurrencyLabel } = require("../utils/currency");
 
 class Indonesian {
-    constructor() {
-        this.satuan = [
-            "", "satu", "dua", "tiga", "empat",
-            "lima", "enam", "tujuh", "delapan", "sembilan",
-            "sepuluh", "sebelas"
-        ];
+  constructor() {
+    this.satuan = [
+      "",
+      "satu",
+      "dua",
+      "tiga",
+      "empat",
+      "lima",
+      "enam",
+      "tujuh",
+      "delapan",
+      "sembilan",
+      "sepuluh",
+      "sebelas",
+    ];
 
-        this.scales = [
-            { value: 1e12, label: "triliun" },
-            { value: 1e9, label: "milyar" },
-            { value: 1e6, label: "juta" },
-            { value: 1e3, label: "ribu" }
-        ];
+    this.scales = [
+      { value: 1e12, label: "triliun" },
+      { value: 1e9, label: "milyar" },
+      { value: 1e6, label: "juta" },
+      { value: 1e3, label: "ribu" },
+    ];
+  }
+
+  convertNumber(num, type = "cardinal") {
+    num = parseInt(num, 10);
+    if (isNaN(num)) return "";
+
+    if (type === "ordinal") {
+      if (num === 1) return "pertama";
+      return `ke${this.convertNumber(num, "cardinal")}`;
     }
 
-    toWords(num, type = "cardinal") {
-        num = parseInt(num, 10);
-        if (isNaN(num)) return "";
-
-        if (type === "ordinal") {
-            if (num === 1) return "pertama";
-            return `ke${this.toWords(num)}`;
-        }
-
-        if (num < 12) return this.satuan[num];
-        if (num < 20) return this.satuan[num - 10] + " belas";
-        if (num < 100) {
-            return (
-                this.satuan[Math.floor(num / 10)] +
-                " puluh " +
-                this.toWords(num % 10)
-            ).trim();
-        }
-        if (num < 200) return ("seratus " + this.toWords(num - 100)).trim();
-        if (num < 1000) {
-            return (
-                this.satuan[Math.floor(num / 100)] +
-                " ratus " +
-                this.toWords(num % 100)
-            ).trim();
-        }
-        if (num < 2000) return ("seribu " + this.toWords(num - 1000)).trim();
-
-        for (const { value, label } of this.scales) {
-            if (num >= value) {
-                return (
-                    this.toWords(Math.floor(num / value)) +
-                    " " +
-                    label +
-                    " " +
-                    this.toWords(num % value)
-                ).trim();
-            }
-        }
-
-        return "angka terlalu besar";
+    if (num < 12) return this.satuan[num];
+    if (num < 20) return this.satuan[num - 10] + " belas";
+    if (num < 100) {
+      return (
+        this.satuan[Math.floor(num / 10)] +
+        " puluh " +
+        this.convertNumber(num % 10, type)
+      ).trim();
     }
+    if (num < 200)
+      return ("seratus " + this.convertNumber(num - 100, type)).trim();
+    if (num < 1000) {
+      return (
+        this.satuan[Math.floor(num / 100)] +
+        " ratus " +
+        this.convertNumber(num % 100, type)
+      ).trim();
+    }
+    if (num < 2000)
+      return ("seribu " + this.convertNumber(num - 1000, type)).trim();
+
+    for (const { value, label } of this.scales) {
+      if (num >= value) {
+        return (
+          this.convertNumber(Math.floor(num / value), type) +
+          " " +
+          label +
+          " " +
+          this.convertNumber(num % value, type)
+        ).trim();
+      }
+    }
+
+    return "angka terlalu besar";
+  }
+
+  toWords(num, options = {}) {
+    const { type = "cardinal", currency } = options;
+
+    // --- decimal ---
+    if (typeof num === "string" && num.includes(".")) {
+      const [intPart, decPart] = num.split(".");
+
+      if (currency) {
+        const currencyLabel = getCurrencyLabel(currency, "id");
+        const intWords = this.convertNumber(parseInt(intPart, 10));
+        const decWords = this.convertNumber(parseInt(decPart, 10));
+        return `${intWords} ${currencyLabel} ${decWords} sen`
+          .replace(/\s+/g, " ")
+          .trim();
+      } else {
+        const intWords = this.convertNumber(parseInt(intPart, 10), type);
+        const decWords = decPart
+          .split("")
+          .map((d) => this.satuan[parseInt(d, 10)] || "")
+          .join(" ")
+          .trim();
+        return `${intWords} koma ${decWords}`.replace(/\s+/g, " ").trim();
+      }
+    }
+
+    // --- integer ---
+    let words = this.convertNumber(num, type);
+
+    if (currency && type === "cardinal") {
+      const currencyLabel = getCurrencyLabel(currency, "id");
+      words += " " + currencyLabel;
+    }
+
+    return words.trim();
+  }
 }
 
 module.exports = { Indonesian };

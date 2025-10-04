@@ -1,12 +1,12 @@
-const { getCurrencyLabel } = require("../utils/currency");
+import { getCurrencyLabel } from "../utils/currency.mjs";
 
 /**
- * Malaysian language converter class
- * Converts numbers to Malaysian words (Bahasa Malaysia/Melayu)
+ * Indonesian language converter class
+ * Converts numbers to Indonesian words (Bahasa Indonesia)
  */
-class Malaysian {
+export class Indonesian {
   /**
-   * Initialize Malaysian converter with basic units and scales
+   * Initialize Indonesian converter with basic units and scales
    */
   constructor() {
     /**
@@ -22,7 +22,7 @@ class Malaysian {
       "lima",
       "enam",
       "tujuh",
-      "lapan",
+      "delapan",
       "sembilan",
       "sepuluh",
       "sebelas",
@@ -33,19 +33,19 @@ class Malaysian {
      * @type {Array<{value: number, label: string}>}
      */
     this.scales = [
-      { value: 1e12, label: "trilion" },
-      { value: 1e9, label: "bilion" },
+      { value: 1e12, label: "triliun" },
+      { value: 1e9, label: "milyar" },
       { value: 1e6, label: "juta" },
       { value: 1e3, label: "ribu" },
     ];
   }
 
   /**
-   * Convert a number to Malaysian words
+   * Convert a number to Indonesian words
    *
    * @param {number} num - The number to convert
    * @param {string} [type="cardinal"] - Type of number: "cardinal" or "ordinal"
-   * @returns {string} The number in Malaysian words
+   * @returns {string} The number in Indonesian words
    * @private
    */
   convertNumber(num, type = "cardinal") {
@@ -90,22 +90,22 @@ class Malaysian {
       }
     }
 
-    return "nombor terlalu besar";
+    return "angka terlalu besar";
   }
 
   /**
-   * Convert number to Malaysian words with options
+   * Convert number to Indonesian words with options
    *
    * @param {number|string} num - Number to convert (string for decimal support)
    * @param {Object} [options={}] - Conversion options
    * @param {string} [options.type="cardinal"] - "cardinal" or "ordinal"
-   * @param {string} [options.currency] - Currency code (e.g., "MYR")
-   * @returns {string} The formatted Malaysian text
+   * @param {string} [options.currency] - Currency code (e.g., "IDR")
+   * @returns {string} The formatted Indonesian text
    *
    * @example
    * toWords(12500) // => "dua belas ribu lima ratus"
    * toWords(1, { type: "ordinal" }) // => "pertama"
-   * toWords(50000, { currency: "MYR" }) // => "lima puluh ribu ringgit"
+   * toWords(50000, { currency: "IDR" }) // => "lima puluh ribu rupiah"
    */
   toWords(num, options = {}) {
     const { type = "cardinal", currency } = options;
@@ -115,7 +115,7 @@ class Malaysian {
       const [intPart, decPart] = num.split(".");
 
       if (currency) {
-        const currencyLabel = getCurrencyLabel(currency, "ms");
+        const currencyLabel = getCurrencyLabel(currency, "id");
         const intWords = this.convertNumber(parseInt(intPart, 10));
         const decWords = this.convertNumber(parseInt(decPart, 10));
         return `${intWords} ${currencyLabel} ${decWords} sen`
@@ -128,7 +128,7 @@ class Malaysian {
           .map((d) => this.satuan[parseInt(d, 10)] || "")
           .join(" ")
           .trim();
-        return `${intWords} perpuluhan ${decWords}`.replace(/\s+/g, " ").trim();
+        return `${intWords} koma ${decWords}`.replace(/\s+/g, " ").trim();
       }
     }
 
@@ -136,12 +136,10 @@ class Malaysian {
     let words = this.convertNumber(num, type);
 
     if (currency && type === "cardinal") {
-      const currencyLabel = getCurrencyLabel(currency, "ms");
+      const currencyLabel = getCurrencyLabel(currency, "id");
       words += " " + currencyLabel;
     }
 
     return words.trim();
   }
 }
-
-module.exports = { Malaysian };

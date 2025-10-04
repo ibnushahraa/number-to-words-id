@@ -1,10 +1,10 @@
-const { getCurrencyLabel } = require("../utils/currency");
+import { getCurrencyLabel } from "../utils/currency.mjs";
 
 /**
  * English language converter class
  * Converts numbers to English words
  */
-class English {
+export class English {
   /**
    * Initialize English converter with basic units, tens, and scales
    */
@@ -175,5 +175,3 @@ class English {
     return words.trim();
   }
 }
-
-module.exports = { English };

@@ -1,10 +1,10 @@
-const { getCurrencyLabel } = require("../utils/currency");
+import { getCurrencyLabel } from "../utils/currency.mjs";
 
 /**
  * Malaysian language converter class
  * Converts numbers to Malaysian words (Bahasa Malaysia/Melayu)
  */
-class Malaysian {
+export class Malaysian {
   /**
    * Initialize Malaysian converter with basic units and scales
    */
@@ -143,5 +143,3 @@ class Malaysian {
     return words.trim();
   }
 }
-
-module.exports = { Malaysian };

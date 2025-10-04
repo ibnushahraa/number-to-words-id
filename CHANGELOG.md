@@ -7,6 +7,34 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.2.1] - 2025-10-05
+### Added
+- **Dual package support** (CommonJS + ES Modules) - now supports both `require()` and `import`
+- TypeScript definitions (`index.d.ts`) with full type safety
+- `examples/` folder with 8 comprehensive usage examples:
+  - Basic usage (`basic.js`)
+  - Currency formatting (`currency.js`)
+  - Decimal numbers (`decimal.js`)
+  - Ordinal numbers (`ordinal.js`)
+  - Express.js API (`express-api.js`)
+  - React component (`react-app.jsx`)
+  - Vue 3 component (`vue-app.vue`)
+  - TypeScript usage (`typescript-example.ts`)
+- `.npmignore` for optimized package size
+- `files` field in package.json for better npm publish control
+
+### Changed
+- Updated README.md with improved structure and styling
+- Enhanced documentation with API reference section
+- Improved examples in README with better categorization
+- Removed SECURITY.md (not needed for simple library)
+
+### Fixed
+- Package exports configuration for proper dual package support
+- TypeScript module resolution
+
+---
+
 ## [1.2.0] - 2025-09-28
 ### Added
 - Support for **decimal numbers** (`12.34 → "dua belas koma tiga empat"`, `"twelve point three four"`, etc.).

@@ -1,0 +1,39 @@
+# Development files
+.github/
+.git/
+.claude/
+node_modules/
+
+# Test files
+test/
+*.test.js
+*.test.mjs
+coverage/
+
+# Example files (optional, bisa di-include juga)
+examples/
+
+# Config files
+.gitignore
+.editorconfig
+.prettierrc
+.eslintrc*
+
+# Documentation
+CONTRIBUTING.md
+CHANGELOG.md
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~

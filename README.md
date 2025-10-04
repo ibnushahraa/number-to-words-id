@@ -2,15 +2,29 @@
 
 [![npm version](https://img.shields.io/npm/v/number-to-words-id.svg?style=flat-square)](https://www.npmjs.com/package/number-to-words-id)
 [![npm downloads](https://img.shields.io/npm/dm/number-to-words-id.svg?style=flat-square)](https://www.npmjs.com/package/number-to-words-id)
-[![CI](https://github.com/ibnushahraa/number-to-words-id/actions/workflows/test.yml/badge.svg)](https://github.com/ibnushahraa/number-to-words-id/actions/workflows/test.yml)
-[![license](https://img.shields.io/npm/l/number-to-words-id.svg?style=flat-square)](./LICENSE)
+[![license](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](LICENSE)
+[![CI](https://github.com/ibnushahraa/number-to-words-id/actions/workflows/test.yml/badge.svg)](https://github.com/ibnushahraa/number-to-words-id/actions)
 
-Convert numbers into words (**terbilang**) in **Bahasa Indonesia** 🇮🇩, **Bahasa Malaysia** 🇲🇾, and **English** 🇬🇧.  
-Lightweight, no dependencies, and ready for financial or general use.
+🔢 Convert numbers into words (**terbilang**) in **Bahasa Indonesia** 🇮🇩, **Bahasa Malaysia** 🇲🇾, and **English** 🇬🇧.
+Lightweight, zero dependencies, and ready for financial or general use.
 
 ---
 
-## 🚀 Installation
+## ✨ Features
+
+- Convert numbers to words in **3 languages** (Indonesia, Malaysia, English)
+- Support up to **trillion / triliun / trilion**
+- Optional **currency** formatting (`IDR`, `MYR`, `USD`) with fallback support
+- Decimal numbers support (`koma`, `perpuluhan`, `point`)
+- Currency decimals (`sen`, `cents`)
+- Ordinal numbers (`pertama`, `first`, etc.)
+- **Dual package support** (CommonJS + ES Modules)
+- **TypeScript** definitions included
+- Zero dependencies
+
+---
+
+## 📦 Installation
 
 ```bash
 npm install number-to-words-id
@@ -18,42 +32,57 @@ npm install number-to-words-id
 
 ---
 
-## 📖 Usage
+## 🚀 Usage
 
-### Basic
+### Basic Usage
 
 ```js
 const { toWords } = require("number-to-words-id");
+// or
+import { toWords } from "number-to-words-id";
 
 console.log(toWords(12500, { lang: "id" }));
 // "dua belas ribu lima ratus"
+
+console.log(toWords(12500, { lang: "en" }));
+// "twelve thousand five hundred"
+
+console.log(toWords(12500, { lang: "ms" }));
+// "dua belas ribu lima ratus"
 ```
 
-### With Currency
+### Currency Formatting
 
 ```js
+// Indonesian Rupiah
 console.log(toWords(50000, { lang: "id", currency: "IDR" }));
 // "lima puluh ribu rupiah"
 
+// Malaysian Ringgit
 console.log(toWords(500, { lang: "ms", currency: "MYR" }));
 // "lima ratus ringgit"
 
+// US Dollar
 console.log(toWords(12500, { lang: "en", currency: "USD" }));
 // "twelve thousand five hundred US dollars"
 
+// Fallback for unsupported currencies
 console.log(toWords(1000, { lang: "id", currency: "JPY" }));
-// "seribu jpy" (fallback)
+// "seribu jpy"
 ```
 
-### Decimals
+### Decimal Numbers
 
 ```js
+// Indonesian (koma)
 console.log(toWords("12.34", { lang: "id" }));
 // "dua belas koma tiga empat"
 
+// Malaysian (perpuluhan)
 console.log(toWords("12.34", { lang: "ms" }));
 // "dua belas perpuluhan tiga empat"
 
+// English (point)
 console.log(toWords("12.34", { lang: "en" }));
 // "twelve point three four"
 ```
@@ -74,21 +103,53 @@ console.log(toWords("1250.75", { lang: "en", currency: "USD" }));
 ### Ordinal Numbers
 
 ```js
+// Indonesian
 console.log(toWords(1, { lang: "id", type: "ordinal" }));
 // "pertama"
 
-console.log(toWords(10, { lang: "ms", type: "ordinal" }));
-// "kesepuluh"
+console.log(toWords(21, { lang: "id", type: "ordinal" }));
+// "kedua puluh satu"
+
+// English
+console.log(toWords(1, { lang: "en", type: "ordinal" }));
+// "first"
 
 console.log(toWords(21, { lang: "en", type: "ordinal" }));
 // "twenty-first"
+
+// Malaysian
+console.log(toWords(10, { lang: "ms", type: "ordinal" }));
+// "kesepuluh"
+```
+
+---
+
+## 🧪 Testing
+
+```bash
+npm test
+```
+
+Jest is used for testing. All tests must pass before publishing.
+
+---
+
+## 📂 Project Structure
+
+```
+src/       → main source code
+test/      → jest test suite
+examples/  → usage examples
+.github/   → CI workflows
 ```
 
 ---
 
 ## 🌐 Integration Examples
 
-### Express.js API (Node.js, require)
+> 💡 **More examples available in the [`examples/`](./examples) folder!**
+
+### Express.js API
 
 ```js
 const express = require("express");
@@ -122,7 +183,7 @@ GET http://localhost:3000/terbilang/12500?lang=id&currency=IDR
 
 ---
 
-### Vue 3 (import)
+### Vue 3
 
 ```vue
 <script setup>
@@ -148,7 +209,7 @@ function convert() {
 
 ---
 
-### React (import)
+### React
 
 ```jsx
 import React, { useState } from "react";
@@ -176,27 +237,49 @@ export default function App() {
 }
 ```
 
-## ⚡ Features
-
-- Convert numbers to words (**Indonesia + Malaysia + English**)
-- Support up to **trillion / triliun / trillion**
-- Optional **currency** (`IDR`, `MYR`, `USD`) + fallback (misal `JPY` → `"jpy"`)
-- Decimal support (`koma`, `perpuluhan`, `point`)
-- Currency decimals (`sen`, `cents`)
-- Ordinal numbers (`type: "ordinal"`)
-- Clean, **no dependencies**
-- Fully tested with **Jest**
-
 ---
 
-## 🧪 Running Tests
+## 📜 API
 
-```bash
-npm test
+### `toWords(num, options?)`
+
+Convert a number to words.
+
+**Parameters:**
+- `num` (number | string): Number to convert (string for decimal support)
+- `options` (object, optional):
+  - `lang` (string): Language code - `"id"`, `"en"`, or `"ms"` (default: `"id"`)
+  - `currency` (string): Currency code - `"IDR"`, `"MYR"`, `"USD"`, or any string (default: none)
+  - `type` (string): Number type - `"cardinal"` or `"ordinal"` (default: `"cardinal"`)
+
+**Returns:** `string` - The number converted to words
+
+**Example:**
+```js
+toWords(12500, { lang: "id", currency: "IDR" });
+// "dua belas ribu lima ratus rupiah"
+
+toWords("99.99", { lang: "en" });
+// "ninety-nine point nine nine"
+
+toWords(1, { lang: "id", type: "ordinal" });
+// "pertama"
 ```
 
 ---
 
-## 📜 License
+## 🤝 Contributing
 
-MIT
+We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+
+**Ways to contribute:**
+- Report bugs and suggest features
+- Submit pull requests
+- Improve documentation
+- Add more language support
+
+---
+
+## 📄 License
+
+[MIT](LICENSE) © 2025

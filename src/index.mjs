@@ -1,6 +1,6 @@
-const { Indonesian } = require("./lang/id");
-const { English } = require("./lang/en");
-const { Malaysian } = require("./lang/ms");
+import { Indonesian } from "./lang/id.mjs";
+import { English } from "./lang/en.mjs";
+import { Malaysian } from "./lang/ms.mjs";
 
 /**
  * Convert numbers to words in Indonesian, Malaysian, or English
@@ -34,7 +34,7 @@ const { Malaysian } = require("./lang/ms");
  *
  * @throws {Error} If unsupported language is provided
  */
-function toWords(num, options = {}) {
+export function toWords(num, options = {}) {
   const { lang = "id" } = options;
   let result = "";
 
@@ -54,5 +54,3 @@ function toWords(num, options = {}) {
 
   return result.trim();
 }
-
-module.exports = { toWords };

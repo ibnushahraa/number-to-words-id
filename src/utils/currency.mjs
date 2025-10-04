@@ -1,4 +1,4 @@
-// src/utils/currency.js
+// src/utils/currency.mjs
 
 /**
  * Currency code to localized name mapping
@@ -26,10 +26,8 @@ const currencyMap = {
  * getCurrencyLabel("USD", "en") // => "US dollars"
  * getCurrencyLabel("JPY", "id") // => "jpy" (fallback)
  */
-function getCurrencyLabel(code, lang) {
+export function getCurrencyLabel(code, lang) {
   const cur = currencyMap[code];
   if (!cur) return code.toLowerCase(); // fallback
   return cur[lang] || code.toLowerCase();
 }
-
-module.exports = { getCurrencyLabel };

@@ -1,7 +1,18 @@
 const { getCurrencyLabel } = require("../utils/currency");
 
+/**
+ * Indonesian language converter class
+ * Converts numbers to Indonesian words (Bahasa Indonesia)
+ */
 class Indonesian {
+  /**
+   * Initialize Indonesian converter with basic units and scales
+   */
   constructor() {
+    /**
+     * Basic number units (0-11)
+     * @type {string[]}
+     */
     this.satuan = [
       "",
       "satu",
@@ -17,6 +28,10 @@ class Indonesian {
       "sebelas",
     ];
 
+    /**
+     * Large number scales (thousand, million, billion, trillion)
+     * @type {Array<{value: number, label: string}>}
+     */
     this.scales = [
       { value: 1e12, label: "triliun" },
       { value: 1e9, label: "milyar" },
@@ -25,6 +40,14 @@ class Indonesian {
     ];
   }
 
+  /**
+   * Convert a number to Indonesian words
+   *
+   * @param {number} num - The number to convert
+   * @param {string} [type="cardinal"] - Type of number: "cardinal" or "ordinal"
+   * @returns {string} The number in Indonesian words
+   * @private
+   */
   convertNumber(num, type = "cardinal") {
     num = parseInt(num, 10);
     if (isNaN(num)) return "";
@@ -70,6 +93,20 @@ class Indonesian {
     return "angka terlalu besar";
   }
 
+  /**
+   * Convert number to Indonesian words with options
+   *
+   * @param {number|string} num - Number to convert (string for decimal support)
+   * @param {Object} [options={}] - Conversion options
+   * @param {string} [options.type="cardinal"] - "cardinal" or "ordinal"
+   * @param {string} [options.currency] - Currency code (e.g., "IDR")
+   * @returns {string} The formatted Indonesian text
+   *
+   * @example
+   * toWords(12500) // => "dua belas ribu lima ratus"
+   * toWords(1, { type: "ordinal" }) // => "pertama"
+   * toWords(50000, { currency: "IDR" }) // => "lima puluh ribu rupiah"
+   */
   toWords(num, options = {}) {
     const { type = "cardinal", currency } = options;
 

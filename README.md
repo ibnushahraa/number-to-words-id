@@ -4,6 +4,7 @@
 [![npm downloads](https://img.shields.io/npm/dm/number-to-words-id.svg?style=flat-square)](https://www.npmjs.com/package/number-to-words-id)
 [![license](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](LICENSE)
 [![CI](https://github.com/ibnushahraa/number-to-words-id/actions/workflows/test.yml/badge.svg)](https://github.com/ibnushahraa/number-to-words-id/actions)
+[![coverage](https://img.shields.io/badge/coverage-93%25-brightgreen.svg?style=flat-square)](https://github.com/ibnushahraa/number-to-words-id)
 
 🔢 Convert numbers into words (**terbilang**) in **Bahasa Indonesia** 🇮🇩, **Bahasa Malaysia** 🇲🇾, and **English** 🇬🇧.
 Lightweight, zero dependencies, and ready for financial or general use.
